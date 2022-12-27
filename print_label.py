@@ -1,11 +1,13 @@
-import pptx
-import re
-from pptx.util import Cm, Pt, Inches
-from pptx import Presentation
 import csv
-import sys
 import os
+import re
+import sys
 import copy
+
+import pptx
+from pptx import Presentation
+from pptx.util import Cm, Inches, Pt
+
 
 PPTX_PATTERN_PATH = 'address_label_pattern.pptx'
 
