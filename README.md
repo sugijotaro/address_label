@@ -25,3 +25,15 @@ csvファイルが置いてあるディレクトリに、`(csvのファイル名
 - csvファイルはutf-8で保存する必要があります
 - [sample.csv](/data/sample.csv)を参考にしてください
 - サンプルデータは[疑似個人情報データ生成サービス](https://hogehoge.tk/personal/)を用いて作成したデータです
+
+## 生成されたpptxファイルについて
+生成されたpptxファイルを開こうとすると
+
+<img width="372" alt="" src="https://user-images.githubusercontent.com/52352924/209918032-8c1e747e-f9a3-4444-af84-f52a9b27784c.png">
+
+このようなダイアログが出ることがあります。
+この場合は、「修復」を押して
+
+<img width="372" alt="" src="https://user-images.githubusercontent.com/52352924/209918059-4d4ec04a-26cc-47e2-a0cc-12080de55e70.png">
+
+「OK」を押すと開くことができます。
