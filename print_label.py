@@ -91,6 +91,36 @@ def read_csv(csv_file_path):
     return address_list
 
 
+def shape_up_address(input_str: str) -> str:
+    result = convert_number_to_kanji(input_str)
+    return result
+
+
+def convert_number_to_kanji(input_str: str) -> str:
+    numbers = re.findall(r'\d+', input_str)
+    kanji_numbers = [convert_to_kanji(int(n)) for n in numbers]
+    return re.sub(r'\d+', lambda x: kanji_numbers.pop(0), input_str)
+
+
+def convert_to_kanji(num: int) -> str:
+    kanji_numbers = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十']
+    if num < 11:
+        return kanji_numbers[num]
+    elif num < 20:
+        result = '十' + kanji_numbers[num % 10]
+        return result
+    elif num < 100:
+        result = kanji_numbers[num // 10] + '十'
+        if num % 10 != 0:
+            result += kanji_numbers[num % 10]
+        return result
+    else:
+        result = ""
+        for n in str(num):
+            result += kanji_numbers[int(n)]
+        return result
+
+
 def pptx_copy_slide(pres: pptx.Presentation, source: pptx.slide.Slide):
     dest = pres.slides.add_slide(source.slide_layout)
     for shape in dest.shapes:
