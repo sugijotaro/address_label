@@ -83,8 +83,8 @@ def read_csv(csv_file_path):
             "first_name_list": [line[1].encode().decode("utf-8")],
             "honorific_list": [line[2].encode().decode("utf-8")],
             "address_no": line[3].encode().decode("utf-8"),
-            "address1": line[4].encode().decode("utf-8"),
-            "address2": line[5].encode().decode("utf-8"),
+            "address1": shape_up_address(line[4].encode().decode("utf-8")),
+            "address2": shape_up_address(line[5].encode().decode("utf-8")),
         }
 
         address_list.append(tmp_address_data)
