@@ -92,7 +92,8 @@ def read_csv(csv_file_path):
 
 
 def shape_up_address(input_str: str) -> str:
-    result = convert_number_to_kanji(input_str)
+    number_comverted = convert_number_to_kanji(input_str)
+    result = convert_alphabet_half_width_to_full_width(number_comverted)
     return result
 
 
@@ -100,6 +101,18 @@ def convert_number_to_kanji(input_str: str) -> str:
     numbers = re.findall(r'\d+', input_str)
     kanji_numbers = [convert_to_kanji(int(n)) for n in numbers]
     return re.sub(r'\d+', lambda x: kanji_numbers.pop(0), input_str)
+
+
+def convert_alphabet_half_width_to_full_width(input_str: str) -> str:
+    output_str = ""
+    for ch in input_str:
+        if ch >= 'A' and ch <= 'Z':
+            code_point = ord(ch)
+            ch_full_width = chr(code_point + 65248)
+            output_str += ch_full_width
+        else:
+            output_str += ch
+    return output_str
 
 
 def convert_to_kanji(num: int) -> str:
