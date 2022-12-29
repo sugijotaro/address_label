@@ -9,13 +9,10 @@ from pptx import Presentation
 from pptx.util import Cm, Inches, Pt
 
 
-PPTX_PATTERN_PATH = 'address_label_pattern.pptx'
-
-
 class CreateLabel(object):
-    def __init__(self, address_data):
+    def __init__(self, pattern_pptx, address_data):
         self.address_data = address_data
-        self.prs = pptx.Presentation(PPTX_PATTERN_PATH)
+        self.prs = pptx.Presentation(pattern_pptx)
         self.slide = self.prs.slides[0]
 
     def create_label(self):
@@ -130,32 +127,30 @@ def pptx_copy_slide(pres: pptx.Presentation, source: pptx.slide.Slide):
 
     return dest
 
-# メイン
-
 
 def do_main():
-    # 引数処理
     if len(sys.argv) < 3:
         print("")
-        print("usage:print_label.py <src_csv> <dest_dir>")
+        print("usage: print_label.py <pattern_pptx> <src_csv>")
         print("")
-
         sys.exit(1)
 
-    target_file = sys.argv[1]
-    dest_dir = sys.argv[2]
+    pattern_pptx = sys.argv[1]
+    src_csv_file = sys.argv[2]
+    file_path_and_name = os.path.splitext(src_csv_file)[0]
 
-    address_list = read_csv(target_file)
+    address_list = read_csv(src_csv_file)
+    prs = pptx.Presentation(pattern_pptx)
     merged_prs = Presentation()
-    merged_prs.slide_height = 4572000
-    merged_prs.slide_width = 2971800
+    merged_prs.slide_height = prs.slide_height
+    merged_prs.slide_width = prs.slide_width
 
     for address_data in address_list:
-        label_prs = CreateLabel(address_data)
+        label_prs = CreateLabel(pattern_pptx, address_data)
         label = label_prs.create_label()
         pptx_copy_slide(merged_prs, label.slides[0])
 
-    merged_prs.save(dest_dir+os.sep+'address.pptx')
+    merged_prs.save(f"{file_path_and_name}.pptx")
 
 
 if __name__ == u"__main__":
